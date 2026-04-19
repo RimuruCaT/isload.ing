@@ -216,6 +216,9 @@ header {
   cursor: pointer;
   transition: opacity .5s;
   line-height: 0;
+  background: none;
+  border: none;
+  padding: .5rem;
 }
 .scroll-hint.hidden { opacity: 0; pointer-events: none; }
 

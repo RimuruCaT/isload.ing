@@ -100,6 +100,7 @@ const statusEl = document.getElementById('progress-status');
 const timerEl  = document.getElementById('footer-timer');
 
 // ── i18n ──────────────────────────────────────────────────
+// Translations are static/hardcoded strings — innerHTML is safe here.
 function setLang(lang) {
   currentLang = lang;
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
@@ -173,6 +174,13 @@ document.querySelectorAll('.specimen[data-style]').forEach(function (el) {
   el.addEventListener('click', function () {
     setProgressStyle(el.dataset.style);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  el.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setProgressStyle(el.dataset.style);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   });
 });
 

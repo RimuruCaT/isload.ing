@@ -21,21 +21,21 @@ const translations = {
   },
   zh: {
     'header-status':   '加载中',
-    'hero-eyebrow':    '行为艺术',
-    'hero-title':      '仍在<br><span class="dim">加载中。</span>',
-    'hero-sub':        '一个永远加载不完的网站。无尽的等待化为像素——关于耐心、进度与完成幻觉的冥想。',
-    'progress-label':  '加载资源',
-    'section-label':   '示例',
-    'section-title':   '加载的多种形态',
-    'specimen-ring':   '环形旋转',
-    'specimen-dots':   '点阵脉冲',
+    'hero-eyebrow':    '',
+    'hero-title':      '仍在<br><span class="dim">加载中</span>',
+    'hero-sub':        '一个永远加载不完的网站。无尽的等待凝结成像素——这是一场关于耐心、进度，以及"马上就好"这一永恒幻觉的沉思。',
+    'progress-label':  '正在加载资源',
+    'section-label':   '标本',
+    'section-title':   '加载的千姿百态',
+    'specimen-ring':   '旋转环',
+    'specimen-dots':   '跳动圆点',
     'specimen-bar':    '进度条',
     'specimen-skel':   '骨架屏',
-    'specimen-arc':    '圆弧',
-    'specimen-wave':   '波浪条',
+    'specimen-arc':    '弧形进度',
+    'specimen-wave':   '波形条',
     'specimen-ripple': '涟漪',
     'specimen-double': '双环',
-    'footer-copy':     '© 永远加载不完',
+    'footer-copy':     '© forever loading',
     'lang-btn':        'EN',
   },
 };
@@ -57,16 +57,16 @@ const statuses = {
   ],
   zh: [
     '初始化...',
-    '连接服务器...',
+    '正在连接服务器...',
     '获取资源...',
     '下载文件...',
     '快好了...',
-    '验证完整性...',
+    '校验文件完整性...',
     '同步数据...',
     '加载模块...',
     '优化中...',
-    '准备您的体验...',
-    '解析依赖...',
+    '为您精心准备中...',
+    '解析依赖项...',
     '仍在加载...',
   ],
 };
@@ -91,7 +91,10 @@ function setLang(lang) {
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.querySelectorAll('[data-i18n]').forEach(function (el) {
     var val = translations[lang][el.dataset.i18n];
-    if (val !== undefined) el.innerHTML = val;
+    if (val !== undefined) {
+      el.innerHTML = val;
+      el.style.display = val === '' ? 'none' : '';
+    }
   });
   statusEl.textContent = statuses[lang][statusIdx % statuses[lang].length];
   updateTimer();

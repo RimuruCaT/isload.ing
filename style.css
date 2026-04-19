@@ -574,10 +574,7 @@ header {
   content: '|';
   margin-left: 2px;
   animation: cursor-blink .85s step-end infinite;
-  background: linear-gradient(90deg, var(--accent), var(--accent-alt));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--accent-alt);
 }
 @keyframes cursor-blink {
   0%, 100% { opacity: 1; }

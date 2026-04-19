@@ -25,7 +25,7 @@ const translations = {
     'hero-title':      '仍在<br><span class="dim">加载中</span>',
     'hero-sub':        '一个永远加载不完的网站。无尽的等待凝结成像素——这是一场关于耐心、进度，以及"马上就好"这一永恒幻觉的沉思。',
     'progress-label':  '正在加载资源',
-    'section-label':   '标本',
+    'section-label':   '样品',
     'section-title':   '加载的千姿百态',
     'specimen-ring':   '旋转环',
     'specimen-dots':   '跳动圆点',

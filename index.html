@@ -11,443 +11,32 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg:          #0c0c0f;
-      --surface:     #141419;
-      --surface-2:   #1c1c25;
-      --border:      #252535;
-      --text:        #dddde8;
-      --text-muted:  #64647a;
-      --accent:      #7c7cf8;
-      --accent-alt:  #e879a0;
-      --accent-green:#4ade80;
-      --r:           10px;
-    }
-
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', system-ui, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.6;
-    }
-
-    /* ── Header ─────────────────────────────────────────── */
-    header {
-      position: fixed;
-      inset: 0 0 auto;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 2rem;
-      border-bottom: 1px solid var(--border);
-      background: rgba(12,12,15,.8);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    .logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .9375rem;
-      font-weight: 500;
-      color: var(--text);
-      letter-spacing: -.02em;
-      text-decoration: none;
-    }
-
-    .header-status {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .75rem;
-      color: var(--text-muted);
-    }
-
-    .live-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--accent-green);
-      animation: breathe 2.4s ease-in-out infinite;
-    }
-
-    @keyframes breathe {
-      0%,100% { opacity: 1; transform: scale(1); }
-      50%      { opacity: .3; transform: scale(.7); }
-    }
-
-    /* ── Hero ────────────────────────────────────────────── */
-    .hero {
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 7rem 1.5rem 5rem;
-      text-align: center;
-      position: relative;
-    }
-
-    /* subtle radial glow */
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(124,124,248,.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-eyebrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .6875rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.75rem;
-    }
-
-    .hero-title {
-      font-size: clamp(2.75rem, 8vw, 6.5rem);
-      font-weight: 300;
-      letter-spacing: -.04em;
-      line-height: 1.0;
-      color: var(--text);
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-title .dim { color: var(--text-muted); }
-
-    .hero-sub {
-      font-size: 1rem;
-      color: var(--text-muted);
-      font-weight: 300;
-      max-width: 440px;
-      line-height: 1.75;
-      margin-bottom: 4.5rem;
-    }
-
-    /* ── Progress Block ──────────────────────────────────── */
-    .progress-block {
-      width: min(560px, 100%);
-      display: flex;
-      flex-direction: column;
-      gap: .75rem;
-    }
-
-    .progress-row {
-      display: flex;
-      justify-content: space-between;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .75rem;
-      color: var(--text-muted);
-    }
-
-    .progress-row .pct {
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    .bar-track {
-      height: 3px;
-      background: var(--surface-2);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-alt));
-      border-radius: 99px;
-      width: 0%;
-      transition: width .9s cubic-bezier(.16,1,.3,1);
-    }
-
-    .progress-status {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .75rem;
-      color: var(--text-muted);
-      text-align: center;
-      min-height: 1em;
-      transition: opacity .3s ease;
-    }
-
-    /* ── Divider ─────────────────────────────────────────── */
-    .divider {
-      height: 1px;
-      background: var(--border);
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    /* ── Gallery ─────────────────────────────────────────── */
-    .gallery {
-      padding: 6rem 2rem;
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .6875rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: .75rem;
-    }
-
-    .section-title {
-      font-size: 1.75rem;
-      font-weight: 300;
-      letter-spacing: -.03em;
-      color: var(--text);
-      margin-bottom: 3rem;
-    }
-
-    .specimen-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      overflow: hidden;
-    }
-
-    .specimen {
-      background: var(--surface);
-      padding: 2rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .specimen-name {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .6875rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .specimen-stage {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 80px;
-    }
-
-    /* ── Loading Specimens ───────────────────────────────── */
-
-    /* 1. Ring Spinner */
-    .a-spinner {
-      width: 40px; height: 40px;
-      border: 2px solid var(--surface-2);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* 2. Dot Pulse */
-    .a-dots { display: flex; gap: 7px; align-items: center; }
-
-    .a-dots span {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: dot-pulse 1.4s ease-in-out infinite;
-    }
-    .a-dots span:nth-child(2) { animation-delay: .2s; }
-    .a-dots span:nth-child(3) { animation-delay: .4s; }
-
-    @keyframes dot-pulse {
-      0%,80%,100% { transform: scale(.55); opacity: .3; }
-      40%          { transform: scale(1);   opacity: 1;   }
-    }
-
-    /* 3. Indeterminate Bar */
-    .a-indet {
-      width: 150px; height: 3px;
-      background: var(--surface-2);
-      border-radius: 99px;
-      overflow: hidden;
-      position: relative;
-    }
-    .a-indet::after {
-      content: '';
-      position: absolute; inset: 0;
-      width: 50%;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      animation: sweep 1.8s ease-in-out infinite;
-    }
-    @keyframes sweep {
-      0%   { transform: translateX(-200%); }
-      100% { transform: translateX(400%); }
-    }
-
-    /* 4. Skeleton */
-    .a-skel { display: flex; flex-direction: column; gap: 8px; width: 130px; }
-
-    .a-skel-line {
-      height: 8px;
-      background: var(--surface-2);
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
-    }
-    .a-skel-line:nth-child(1) { width: 100%; }
-    .a-skel-line:nth-child(2) { width: 80%; }
-    .a-skel-line:nth-child(3) { width: 55%; }
-
-    .a-skel-line::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.07), transparent);
-      animation: shimmer 1.8s linear infinite;
-    }
-    @keyframes shimmer {
-      0%   { transform: translateX(-100%); }
-      100% { transform: translateX(200%); }
-    }
-
-    /* 5. Circular Arc (SVG) */
-    .a-arc { width: 48px; height: 48px; transform: rotate(-90deg); }
-    .a-arc-track { fill: none; stroke: var(--surface-2); stroke-width: 2.5; }
-    .a-arc-fill  {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-dasharray: 120;
-      stroke-dashoffset: 28;
-      animation: arc-dance 3s ease-in-out infinite;
-    }
-    @keyframes arc-dance {
-      0%,100% { stroke-dashoffset: 28; }
-      50%     { stroke-dashoffset:  6; }
-    }
-
-    /* 6. Wave Bars */
-    .a-wave { display: flex; align-items: center; gap: 4px; height: 40px; }
-
-    .a-wave span {
-      width: 4px;
-      background: var(--accent);
-      border-radius: 2px;
-      animation: bar-wave 1.2s ease-in-out infinite;
-    }
-    .a-wave span:nth-child(1) { animation-delay: 0s; }
-    .a-wave span:nth-child(2) { animation-delay: .15s; }
-    .a-wave span:nth-child(3) { animation-delay: .3s; }
-    .a-wave span:nth-child(4) { animation-delay: .45s; }
-    .a-wave span:nth-child(5) { animation-delay: .6s; }
-
-    @keyframes bar-wave {
-      0%,100% { height: 8px;  opacity: .4; }
-      50%     { height: 32px; opacity: 1;  }
-    }
-
-    /* 7. Ripple */
-    .a-ripple {
-      position: relative;
-      width: 48px; height: 48px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .a-ripple-ring {
-      position: absolute;
-      border: 1.5px solid var(--accent);
-      border-radius: 50%;
-      width: 100%; height: 100%;
-      animation: ripple-out 2.4s ease-out infinite;
-    }
-    .a-ripple-ring:nth-child(2) { animation-delay: .8s; }
-    .a-ripple-ring:nth-child(3) { animation-delay: 1.6s; }
-    .a-ripple-dot {
-      width: 8px; height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-    }
-    @keyframes ripple-out {
-      0%   { transform: scale(.2); opacity: 1; }
-      100% { transform: scale(1.8); opacity: 0; }
-    }
-
-    /* 8. Double Ring */
-    .a-double { position: relative; width: 44px; height: 44px; }
-    .a-double-outer,
-    .a-double-inner {
-      position: absolute;
-      border-radius: 50%;
-      border: 2px solid transparent;
-    }
-    .a-double-outer {
-      inset: 0;
-      border-top-color: var(--accent);
-      animation: spin 1.4s linear infinite;
-    }
-    .a-double-inner {
-      inset: 8px;
-      border-top-color: var(--accent-alt);
-      animation: spin .9s linear infinite reverse;
-    }
-
-    /* ── Footer ──────────────────────────────────────────── */
-    .site-footer {
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .75rem;
-      color: var(--text-muted);
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .site-footer a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .site-footer a:hover { color: var(--text); }
-
-    /* ── Responsive ──────────────────────────────────────── */
-    @media (max-width: 640px) {
-      header { padding: 1rem 1.25rem; }
-      .specimen-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
   <a href="/" class="logo">isload.ing</a>
-  <div class="header-status">
-    <div class="live-dot"></div>
-    <span>loading</span>
+  <div class="header-right">
+    <div class="header-status">
+      <div class="live-dot"></div>
+      <span data-i18n="header-status">loading</span>
+    </div>
+    <button id="lang-btn" class="lang-btn" data-i18n="lang-btn">中文</button>
   </div>
 </header>
 
 <main class="hero">
-  <p class="hero-eyebrow">performance art</p>
-  <h1 class="hero-title">Still<br><span class="dim">Loading.</span></h1>
-  <p class="hero-sub">
+  <p class="hero-eyebrow" data-i18n="hero-eyebrow">performance art</p>
+  <h1 class="hero-title" data-i18n="hero-title">Still<br><span class="dim">Loading.</span></h1>
+  <p class="hero-sub" data-i18n="hero-sub">
     A website that never finishes loading.
     An infinite wait rendered in pixels — a meditation on patience,
     progress, and the illusion of completion.
   </p>
   <div class="progress-block">
     <div class="progress-row">
-      <span id="progress-label">Loading resources</span>
+      <span id="progress-label" data-i18n="progress-label">Loading resources</span>
       <span class="pct" id="progress-pct">0%</span>
     </div>
     <div class="bar-track">
@@ -460,20 +49,20 @@
 <div class="divider"></div>
 
 <section class="gallery">
-  <p class="section-label">Specimens</p>
-  <h2 class="section-title">The Many Faces of Loading</h2>
+  <p class="section-label" data-i18n="section-label">Specimens</p>
+  <h2 class="section-title" data-i18n="section-title">The Many Faces of Loading</h2>
 
   <div class="specimen-grid">
 
     <div class="specimen">
-      <span class="specimen-name">Ring Spinner</span>
+      <span class="specimen-name" data-i18n="specimen-ring">Ring Spinner</span>
       <div class="specimen-stage">
         <div class="a-spinner"></div>
       </div>
     </div>
 
     <div class="specimen">
-      <span class="specimen-name">Dot Pulse</span>
+      <span class="specimen-name" data-i18n="specimen-dots">Dot Pulse</span>
       <div class="specimen-stage">
         <div class="a-dots">
           <span></span><span></span><span></span>
@@ -482,14 +71,14 @@
     </div>
 
     <div class="specimen">
-      <span class="specimen-name">Progress Bar</span>
+      <span class="specimen-name" data-i18n="specimen-bar">Progress Bar</span>
       <div class="specimen-stage">
         <div class="a-indet"></div>
       </div>
     </div>
 
     <div class="specimen">
-      <span class="specimen-name">Skeleton</span>
+      <span class="specimen-name" data-i18n="specimen-skel">Skeleton</span>
       <div class="specimen-stage">
         <div class="a-skel">
           <div class="a-skel-line"></div>
@@ -500,7 +89,7 @@
     </div>
 
     <div class="specimen">
-      <span class="specimen-name">Circular Arc</span>
+      <span class="specimen-name" data-i18n="specimen-arc">Circular Arc</span>
       <div class="specimen-stage">
         <svg class="a-arc" viewBox="0 0 48 48">
           <circle class="a-arc-track" cx="24" cy="24" r="19"/>
@@ -510,7 +99,7 @@
     </div>
 
     <div class="specimen">
-      <span class="specimen-name">Wave Bars</span>
+      <span class="specimen-name" data-i18n="specimen-wave">Wave Bars</span>
       <div class="specimen-stage">
         <div class="a-wave">
           <span></span><span></span><span></span><span></span><span></span>
@@ -519,7 +108,7 @@
     </div>
 
     <div class="specimen">
-      <span class="specimen-name">Ripple</span>
+      <span class="specimen-name" data-i18n="specimen-ripple">Ripple</span>
       <div class="specimen-stage">
         <div class="a-ripple">
           <div class="a-ripple-ring"></div>
@@ -531,7 +120,7 @@
     </div>
 
     <div class="specimen">
-      <span class="specimen-name">Double Ring</span>
+      <span class="specimen-name" data-i18n="specimen-double">Double Ring</span>
       <div class="specimen-stage">
         <div class="a-double">
           <div class="a-double-outer"></div>
@@ -546,73 +135,10 @@
 <div class="divider"></div>
 
 <footer class="site-footer">
-  <span>© forever loading</span>
+  <span data-i18n="footer-copy">© forever loading</span>
   <span id="footer-timer">waited: 0m 00s</span>
 </footer>
 
-<script>
-  // ── Progress counter: approaches but never reaches 100% ──
-  let pct = 0;
-  const MAX_PROGRESS_PERCENT = 98.6;
-
-  const statuses = [
-    "Initializing...",
-    "Connecting to server...",
-    "Fetching resources...",
-    "Downloading assets...",
-    "Almost there...",
-    "Verifying integrity...",
-    "Synchronizing data...",
-    "Loading modules...",
-    "Optimizing...",
-    "Preparing your experience...",
-    "Resolving dependencies...",
-    "Still loading...",
-  ];
-  let statusIdx = 0;
-
-  const fillEl   = document.getElementById('bar-fill');
-  const pctEl    = document.getElementById('progress-pct');
-  const statusEl = document.getElementById('progress-status');
-
-  function increment(current) {
-    if (current < 40) return Math.random() * 3    + 1;
-    if (current < 70) return Math.random() * 1.5  + 0.3;
-    if (current < 85) return Math.random() * 0.5  + 0.05;
-    if (current < 94) return Math.random() * 0.15 + 0.01;
-    return Math.random() * 0.03 + 0.005; // asymptotic crawl
-  }
-
-  function tick() {
-    if (pct < MAX_PROGRESS_PERCENT) pct = Math.min(pct + increment(pct), MAX_PROGRESS_PERCENT);
-    const display = pct.toFixed(1);
-    pctEl.textContent  = display + '%';
-    fillEl.style.width = display + '%';
-  }
-
-  function cycleStatus() {
-    statusEl.style.opacity = '0';
-    setTimeout(() => {
-      statusIdx = (statusIdx + 1) % statuses.length;
-      statusEl.textContent  = statuses[statusIdx];
-      statusEl.style.opacity = '1';
-    }, 300);
-  }
-
-  setInterval(tick, 800);
-  setInterval(cycleStatus, 3500);
-  tick();
-  statusEl.textContent = statuses[0];
-
-  // ── Footer wait-timer ────────────────────────────────────
-  const t0 = Date.now();
-  const timerEl = document.getElementById('footer-timer');
-  setInterval(() => {
-    const s = Math.floor((Date.now() - t0) / 1000);
-    const m = Math.floor(s / 60);
-    timerEl.textContent = `waited: ${m}m ${String(s % 60).padStart(2,'0')}s`;
-  }, 1000);
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>

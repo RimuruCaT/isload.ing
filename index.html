@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>isload.ing</title>
-  <meta name="description" content="永远加载不完。 Performance art about the infinite wait.">
+  <meta name="description" content="永远加载不完。 A website that never finishes loading.">
   <meta property="og:title" content="isload.ing">
   <meta property="og:description" content="A website that never finishes loading.">
   <meta property="og:url" content="https://isload.ing">
@@ -27,23 +27,100 @@
 </header>
 
 <main class="hero">
-  <p class="hero-eyebrow" data-i18n="hero-eyebrow">performance art</p>
+  <p class="hero-eyebrow" data-i18n="hero-eyebrow">digital meditation</p>
   <h1 class="hero-title" data-i18n="hero-title">Still<br><span class="dim">Loading.</span></h1>
   <p class="hero-sub" data-i18n="hero-sub">
     A website that never finishes loading.
     An infinite wait rendered in pixels — a meditation on patience,
     progress, and the illusion of completion.
   </p>
-  <div class="progress-block">
+  <div class="progress-block" id="progress-block">
     <div class="progress-row">
       <span id="progress-label" data-i18n="progress-label">Loading resources</span>
       <span class="pct" id="progress-pct">0%</span>
     </div>
-    <div class="bar-track">
-      <div class="bar-fill" id="bar-fill"></div>
+
+    <!-- bar -->
+    <div class="pb-visual pb-bar">
+      <div class="bar-track">
+        <div class="bar-fill" id="bar-fill"></div>
+      </div>
     </div>
+    <!-- spinner -->
+    <div class="pb-visual pb-spinner">
+      <div class="a-spinner"></div>
+    </div>
+    <!-- dots -->
+    <div class="pb-visual pb-dots">
+      <div class="a-dots"><span></span><span></span><span></span></div>
+    </div>
+    <!-- arc -->
+    <div class="pb-visual pb-arc">
+      <svg class="a-arc" viewBox="0 0 48 48">
+        <circle class="a-arc-track" cx="24" cy="24" r="19"/>
+        <circle class="a-arc-fill"  cx="24" cy="24" r="19"/>
+      </svg>
+    </div>
+    <!-- wave -->
+    <div class="pb-visual pb-wave">
+      <div class="a-wave"><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+    <!-- double -->
+    <div class="pb-visual pb-double">
+      <div class="a-double">
+        <div class="a-double-outer"></div>
+        <div class="a-double-inner"></div>
+      </div>
+    </div>
+    <!-- ripple -->
+    <div class="pb-visual pb-ripple">
+      <div class="a-ripple">
+        <div class="a-ripple-ring"></div>
+        <div class="a-ripple-ring"></div>
+        <div class="a-ripple-ring"></div>
+        <div class="a-ripple-dot"></div>
+      </div>
+    </div>
+    <!-- orbit -->
+    <div class="pb-visual pb-orbit">
+      <div class="a-orbit">
+        <div class="a-orbit-dot"></div>
+        <div class="a-orbit-dot"></div>
+      </div>
+    </div>
+    <!-- grid -->
+    <div class="pb-visual pb-grid">
+      <div class="a-grid">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <!-- flip -->
+    <div class="pb-visual pb-flip">
+      <div class="a-flip"></div>
+    </div>
+    <!-- typewriter -->
+    <div class="pb-visual pb-type">
+      <div class="a-type"><span data-i18n="loading-word">loading</span></div>
+    </div>
+    <!-- skeleton -->
+    <div class="pb-visual pb-skel">
+      <div class="a-skel">
+        <div class="a-skel-line"></div>
+        <div class="a-skel-line"></div>
+        <div class="a-skel-line"></div>
+      </div>
+    </div>
+
     <p class="progress-status" id="progress-status">Initializing...</p>
   </div>
+
+  <button class="scroll-hint" id="scroll-hint" aria-label="Scroll down to see more">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <path d="M5 8.5L11 14.5L17 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 </main>
 
 <div class="divider"></div>
@@ -51,17 +128,18 @@
 <section class="gallery">
   <p class="section-label" data-i18n="section-label">Specimens</p>
   <h2 class="section-title" data-i18n="section-title">The Many Faces of Loading</h2>
+  <p class="specimen-hint" data-i18n="specimen-hint">Click any specimen to preview it in the progress block above ↑</p>
 
   <div class="specimen-grid">
 
-    <div class="specimen">
+    <div class="specimen" data-style="spinner" tabindex="0" role="button">
       <span class="specimen-name" data-i18n="specimen-ring">Ring Spinner</span>
       <div class="specimen-stage">
         <div class="a-spinner"></div>
       </div>
     </div>
 
-    <div class="specimen">
+    <div class="specimen" data-style="dots" tabindex="0" role="button">
       <span class="specimen-name" data-i18n="specimen-dots">Dot Pulse</span>
       <div class="specimen-stage">
         <div class="a-dots">
@@ -70,14 +148,14 @@
       </div>
     </div>
 
-    <div class="specimen">
+    <div class="specimen" data-style="bar" tabindex="0" role="button">
       <span class="specimen-name" data-i18n="specimen-bar">Progress Bar</span>
       <div class="specimen-stage">
         <div class="a-indet"></div>
       </div>
     </div>
 
-    <div class="specimen">
+    <div class="specimen" data-style="skel" tabindex="0" role="button">
       <span class="specimen-name" data-i18n="specimen-skel">Skeleton</span>
       <div class="specimen-stage">
         <div class="a-skel">
@@ -88,7 +166,7 @@
       </div>
     </div>
 
-    <div class="specimen">
+    <div class="specimen" data-style="arc" tabindex="0" role="button">
       <span class="specimen-name" data-i18n="specimen-arc">Circular Arc</span>
       <div class="specimen-stage">
         <svg class="a-arc" viewBox="0 0 48 48">
@@ -98,7 +176,7 @@
       </div>
     </div>
 
-    <div class="specimen">
+    <div class="specimen" data-style="wave" tabindex="0" role="button">
       <span class="specimen-name" data-i18n="specimen-wave">Wave Bars</span>
       <div class="specimen-stage">
         <div class="a-wave">
@@ -107,7 +185,7 @@
       </div>
     </div>
 
-    <div class="specimen">
+    <div class="specimen" data-style="ripple" tabindex="0" role="button">
       <span class="specimen-name" data-i18n="specimen-ripple">Ripple</span>
       <div class="specimen-stage">
         <div class="a-ripple">
@@ -119,7 +197,7 @@
       </div>
     </div>
 
-    <div class="specimen">
+    <div class="specimen" data-style="double" tabindex="0" role="button">
       <span class="specimen-name" data-i18n="specimen-double">Double Ring</span>
       <div class="specimen-stage">
         <div class="a-double">
@@ -129,13 +207,51 @@
       </div>
     </div>
 
+    <div class="specimen" data-style="flip" tabindex="0" role="button">
+      <span class="specimen-name" data-i18n="specimen-flip">Flip</span>
+      <div class="specimen-stage">
+        <div class="a-flip"></div>
+      </div>
+    </div>
+
+    <div class="specimen" data-style="orbit" tabindex="0" role="button">
+      <span class="specimen-name" data-i18n="specimen-orbit">Orbit</span>
+      <div class="specimen-stage">
+        <div class="a-orbit">
+          <div class="a-orbit-dot"></div>
+          <div class="a-orbit-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="specimen" data-style="grid" tabindex="0" role="button">
+      <span class="specimen-name" data-i18n="specimen-grid">Grid Pulse</span>
+      <div class="specimen-stage">
+        <div class="a-grid">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="specimen" data-style="type" tabindex="0" role="button">
+      <span class="specimen-name" data-i18n="specimen-type">Typewriter</span>
+      <div class="specimen-stage">
+        <div class="a-type"><span data-i18n="loading-word">loading</span></div>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <div class="divider"></div>
 
 <footer class="site-footer">
-  <span data-i18n="footer-copy">© forever loading</span>
+  <span data-i18n="footer-copy">© isload.ing</span>
+  <span class="footer-credit">
+    <a href="https://github.com/RimuruCaT" target="_blank" rel="noopener" data-i18n="footer-credit">Made by RimuruCaT</a>
+  </span>
   <span id="footer-timer">waited: 0m 00s</span>
 </footer>
 

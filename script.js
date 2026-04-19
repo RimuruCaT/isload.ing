@@ -2,12 +2,14 @@
 const translations = {
   en: {
     'header-status':   'loading',
-    'hero-eyebrow':    'performance art',
+    'hero-eyebrow':    'digital meditation',
     'hero-title':      'Still<br><span class="dim">Loading.</span>',
     'hero-sub':        'A website that never finishes loading. An infinite wait rendered in pixels — a meditation on patience, progress, and the illusion of completion.',
     'progress-label':  'Loading resources',
+    'loading-word':    'loading',
     'section-label':   'Specimens',
     'section-title':   'The Many Faces of Loading',
+    'specimen-hint':   'Click any specimen to preview it in the progress block above ↑',
     'specimen-ring':   'Ring Spinner',
     'specimen-dots':   'Dot Pulse',
     'specimen-bar':    'Progress Bar',
@@ -16,17 +18,24 @@ const translations = {
     'specimen-wave':   'Wave Bars',
     'specimen-ripple': 'Ripple',
     'specimen-double': 'Double Ring',
-    'footer-copy':     '© forever loading',
+    'specimen-flip':   'Flip',
+    'specimen-orbit':  'Orbit',
+    'specimen-grid':   'Grid Pulse',
+    'specimen-type':   'Typewriter',
+    'footer-copy':     '© isload.ing',
+    'footer-credit':   'Made by RimuruCaT',
     'lang-btn':        '中文',
   },
   zh: {
     'header-status':   '加载中',
-    'hero-eyebrow':    '',
+    'hero-eyebrow':    '数字禅',
     'hero-title':      '仍在<br><span class="dim">加载中</span>',
     'hero-sub':        '一个永远加载不完的网站。无尽的等待凝结成像素——这是一场关于耐心、进度，以及"马上就好"这一永恒幻觉的沉思。',
     'progress-label':  '正在加载资源',
+    'loading-word':    '加载中',
     'section-label':   '样品',
     'section-title':   '加载的千姿百态',
+    'specimen-hint':   '点击任意样式，切换上方进度展示 ↑',
     'specimen-ring':   '旋转环',
     'specimen-dots':   '跳动圆点',
     'specimen-bar':    '进度条',
@@ -35,7 +44,12 @@ const translations = {
     'specimen-wave':   '波形条',
     'specimen-ripple': '涟漪',
     'specimen-double': '双环',
-    'footer-copy':     '© forever loading',
+    'specimen-flip':   '翻转',
+    'specimen-orbit':  '轨道环绕',
+    'specimen-grid':   '网格跳动',
+    'specimen-type':   '打字机',
+    'footer-copy':     '© isload.ing',
+    'footer-credit':   'Made by RimuruCaT',
     'lang-btn':        'EN',
   },
 };
@@ -86,6 +100,7 @@ const statusEl = document.getElementById('progress-status');
 const timerEl  = document.getElementById('footer-timer');
 
 // ── i18n ──────────────────────────────────────────────────
+// Translations are static/hardcoded strings — innerHTML is safe here.
 function setLang(lang) {
   currentLang = lang;
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
@@ -93,7 +108,6 @@ function setLang(lang) {
     var val = translations[lang][el.dataset.i18n];
     if (val !== undefined) {
       el.innerHTML = val;
-      el.style.display = val === '' ? 'none' : '';
     }
   });
   statusEl.textContent = statuses[lang][statusIdx % statuses[lang].length];
@@ -138,10 +152,56 @@ document.getElementById('lang-btn').addEventListener('click', function () {
   setLang(currentLang === 'en' ? 'zh' : 'en');
 });
 
+// ── Progress Style ────────────────────────────────────────
+var ALL_STYLES = ['bar','spinner','dots','arc','wave','double','ripple','orbit','grid','flip','type','skel'];
+var RANDOM_STYLES = ['bar','spinner','dots','arc','wave','double','ripple','orbit','grid','flip','type'];
+
+function setProgressStyle(style) {
+  var block = document.getElementById('progress-block');
+  ALL_STYLES.forEach(function (s) { block.classList.remove('style-' + s); });
+  block.classList.add('style-' + style);
+  document.querySelectorAll('.specimen').forEach(function (el) {
+    el.classList.toggle('active', el.dataset.style === style);
+  });
+}
+
+function initProgressStyle() {
+  var style = RANDOM_STYLES[Math.floor(Math.random() * RANDOM_STYLES.length)];
+  setProgressStyle(style);
+}
+
+document.querySelectorAll('.specimen[data-style]').forEach(function (el) {
+  el.addEventListener('click', function () {
+    setProgressStyle(el.dataset.style);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  el.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setProgressStyle(el.dataset.style);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+});
+
+// ── Scroll Hint ───────────────────────────────────────────
+var scrollHint = document.getElementById('scroll-hint');
+scrollHint.addEventListener('click', function () {
+  document.querySelector('.divider').scrollIntoView({ behavior: 'smooth' });
+});
+window.addEventListener('scroll', function () {
+  if (window.scrollY > 60) {
+    scrollHint.classList.add('hidden');
+  } else {
+    scrollHint.classList.remove('hidden');
+  }
+}, { passive: true });
+
 setInterval(tick, 800);
 setInterval(cycleStatus, 3500);
 setInterval(updateTimer, 1000);
 
 tick();
 updateTimer();
+initProgressStyle();
 setLang(currentLang);

@@ -158,6 +158,29 @@ header {
   font-weight: 500;
 }
 
+/* Multi-style visual switcher */
+.pb-visual {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  min-height: 52px;
+}
+
+.progress-block.style-bar    .pb-bar    { display: flex; flex-direction: column; }
+.progress-block.style-spinner .pb-spinner { display: flex; }
+.progress-block.style-dots   .pb-dots   { display: flex; }
+.progress-block.style-arc    .pb-arc    { display: flex; }
+.progress-block.style-wave   .pb-wave   { display: flex; }
+.progress-block.style-double .pb-double { display: flex; }
+.progress-block.style-ripple .pb-ripple { display: flex; }
+.progress-block.style-orbit  .pb-orbit  { display: flex; }
+.progress-block.style-grid   .pb-grid   { display: flex; }
+.progress-block.style-flip   .pb-flip   { display: flex; }
+.progress-block.style-type   .pb-type   { display: flex; }
+.progress-block.style-skel   .pb-skel   { display: flex; }
+
+.pb-bar { width: 100%; }
+
 .bar-track {
   height: 3px;
   background: var(--surface-2);
@@ -180,6 +203,28 @@ header {
   text-align: center;
   min-height: 1em;
   transition: opacity .3s ease;
+}
+
+/* ── Scroll Hint ─────────────────────────────────────── */
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-muted);
+  animation: bounce-down 2s ease-in-out infinite;
+  cursor: pointer;
+  transition: opacity .5s;
+  line-height: 0;
+  background: none;
+  border: none;
+  padding: .5rem;
+}
+.scroll-hint.hidden { opacity: 0; pointer-events: none; }
+
+@keyframes bounce-down {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(7px); }
 }
 
 /* ── Divider ─────────────────────────────────────────── */
@@ -230,7 +275,11 @@ header {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  cursor: pointer;
+  transition: background .2s;
 }
+.specimen:hover { background: var(--surface-2); }
+.specimen.active { outline: 1px solid var(--accent); outline-offset: -1px; }
 
 .specimen-name {
   font-family: 'JetBrains Mono', monospace;
@@ -238,6 +287,14 @@ header {
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+.specimen-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .6875rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  letter-spacing: .03em;
 }
 
 .specimen-stage {
@@ -424,6 +481,95 @@ header {
   text-decoration: none;
 }
 .site-footer a:hover { color: var(--text); }
+
+/* ── New Specimens ───────────────────────────────────── */
+
+/* 9. Flip */
+.a-flip {
+  width: 32px; height: 32px;
+  background: var(--accent);
+  border-radius: 5px;
+  animation: flip-card 2s ease-in-out infinite;
+}
+@keyframes flip-card {
+  0%, 20%   { transform: scaleX(1);  background: var(--accent); }
+  50%        { transform: scaleX(0); background: var(--accent-alt); }
+  55%, 75%  { transform: scaleX(1);  background: var(--accent-alt); }
+  100%       { transform: scaleX(1);  background: var(--accent); }
+}
+
+/* 10. Orbit */
+.a-orbit {
+  position: relative;
+  width: 44px; height: 44px;
+}
+.a-orbit::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 1px dashed var(--border);
+}
+.a-orbit-dot {
+  position: absolute;
+  width: 9px; height: 9px;
+  background: var(--accent);
+  border-radius: 50%;
+  top: 0; left: 50%;
+  margin-left: -4.5px;
+  transform-origin: 4.5px 22px;
+  animation: orbit-spin 1.8s linear infinite;
+}
+.a-orbit-dot:nth-child(2) {
+  background: var(--accent-alt);
+  animation-delay: -.9s;
+}
+@keyframes orbit-spin { to { transform: rotate(360deg); } }
+
+/* 11. Grid Pulse */
+.a-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 8px);
+  gap: 5px;
+}
+.a-grid span {
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: .2;
+  animation: grid-pulse 1.5s ease-in-out infinite;
+}
+.a-grid span:nth-child(1) { animation-delay: 0s; }
+.a-grid span:nth-child(2) { animation-delay: .1s; }
+.a-grid span:nth-child(3) { animation-delay: .2s; }
+.a-grid span:nth-child(4) { animation-delay: .3s; }
+.a-grid span:nth-child(5) { animation-delay: .4s; }
+.a-grid span:nth-child(6) { animation-delay: .5s; }
+.a-grid span:nth-child(7) { animation-delay: .6s; }
+.a-grid span:nth-child(8) { animation-delay: .7s; }
+.a-grid span:nth-child(9) { animation-delay: .8s; }
+@keyframes grid-pulse {
+  0%, 100% { opacity: .2; transform: scale(.65); }
+  50%       { opacity: 1;  transform: scale(1); }
+}
+
+/* 12. Typewriter */
+.a-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .875rem;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+}
+.a-type::after {
+  content: '|';
+  margin-left: 2px;
+  animation: cursor-blink .85s step-end infinite;
+}
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
 
 /* ── Responsive ──────────────────────────────────────── */
 @media (max-width: 640px) {
